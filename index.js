@@ -32,7 +32,7 @@ jiraInfo
         statusCategories[statusCategory.id] || statusCategory;
       return {
         text: `${key}: ${summary}`,
-        href: `${jiraUrl}/browse/${key}`
+        href: `${jiraUrl}/browse/${key}`,
         statusId: statusCategory.id
       };
     });
