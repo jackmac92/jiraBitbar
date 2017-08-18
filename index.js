@@ -11,6 +11,8 @@ const jiraInfo = new JiraFetcher({
   password: process.env.JIRA_PASSWORD
 });
 
+const jiraUrl = 'https://cbinsights.atlassian.net';
+
 const getColor = statusId => {
   const color = statusCategories[statusId].colorName;
   return (
@@ -25,12 +27,12 @@ jiraInfo
   .then((tickets = []) => {
     const formattedTickets = tickets.map((ticket = {}) => {
       const { key, summary, status = {} } = ticket;
-      const { self: href, name: statusName, statusCategory = {} } = status;
+      const { name: statusName, statusCategory = {} } = status;
       statusCategories[statusCategory.id] =
         statusCategories[statusCategory.id] || statusCategory;
       return {
         text: `${key}: ${summary}`,
-        href,
+        href: `${jiraUrl}/browse/${key}`
         statusId: statusCategory.id
       };
     });
