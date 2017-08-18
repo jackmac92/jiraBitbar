@@ -1,0 +1,12 @@
+{
+  "name": "jiraInfo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jack McCown <jmccown@cbinsights.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bitbar": "^0.3.0",
+    "cbiJira": "^1.1.1",
+    "lodash": "^4.17.4"
+  }
+}
