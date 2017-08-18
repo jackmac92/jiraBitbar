@@ -4,10 +4,16 @@
   "main": "index.js",
   "author": "Jack McCown <jmccown@cbinsights.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "node_modules/.bin/pkg index.js --target macos"
+  },
   "dependencies": {
     "bitbar": "^0.3.0",
-    "cbiJira": "^2.0.0",
+    "cbiJira": "^2.0.1",
     "localApi": "^2.3.0",
     "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "pkg": "^4.2.3"
   }
 }
