@@ -10,17 +10,18 @@ const jiraInfo = new JiraFetcher({
   username: process.env.JIRA_USERNAME,
   password: process.env.JIRA_PASSWORD
 });
+
 jiraInfo
   .getToDos()
   .then((tickets = []) => {
     const formattedTickets = tickets.map((ticket = {}) => {
       const { key, summary, status = {} } = ticket;
-      const { self: url, name: statusName, statusCategory = {} } = status;
+      const { self: href, name: statusName, statusCategory = {} } = status;
       statusCategories[statusCategory.id] =
         statusCategories[statusCategory.id] || statusCategory;
       return {
         text: `${key}: ${summary}`,
-        url,
+        href,
         statusId: statusCategory.id
       };
     });
@@ -32,9 +33,9 @@ jiraInfo
           text: statusCategories[statusId].name,
           color: statusCategories[statusId].colorName
         },
-        ...newFormatted[statusId].map(({ text, url, statusId }) => ({
+        ...newFormatted[statusId].map(({ text, href, statusId }) => ({
           text,
-          url,
+          href,
           color: statusCategories[statusId].colorName
         }))
       ],
