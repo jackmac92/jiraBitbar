@@ -1,11 +1,12 @@
 const bitbar = require('bitbar');
 const JiraFetcher = require('cbiJira');
+const path = require('path');
 const _ = require('lodash');
 
 const { sep: Separator } = bitbar;
 const statusCategories = {};
 const jiraInfo = new JiraFetcher({
-  dir: './cache',
+  dir: path.resolve(process.env.HOME, './jiraCache'),
   username: process.env.JIRA_USERNAME,
   password: process.env.JIRA_PASSWORD
 });
