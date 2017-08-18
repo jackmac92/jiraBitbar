@@ -6,7 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "bitbar": "^0.3.0",
-    "cbiJira": "^1.1.1",
+    "cbiJira": "^2.0.0",
+    "localApi": "^2.3.0",
     "lodash": "^4.17.4"
   }
 }

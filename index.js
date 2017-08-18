@@ -1,12 +1,16 @@
 const bitbar = require('bitbar');
-const jiraInfo = require('cbiJira');
+const JiraFetcher = require('cbiJira');
 const _ = require('lodash');
 
 const { sep: Separator } = bitbar;
 const statusCategories = {};
-
+const jiraInfo = new JiraFetcher({
+  dir: './cache',
+  username: process.env.JIRA_USERNAME,
+  password: process.env.JIRA_PASSWORD
+});
 jiraInfo
-  .getIncompleteTickets()
+  .getToDos()
   .then((tickets = []) => {
     const formattedTickets = tickets.map((ticket = {}) => {
       const { key, summary, status = {} } = ticket;
