@@ -11,6 +11,15 @@ const jiraInfo = new JiraFetcher({
   password: process.env.JIRA_PASSWORD
 });
 
+const getColor = statusId => {
+  const color = statusCategories[statusId].colorName;
+  return (
+    {
+      'blue-gray': 'blue'
+    }[color] || color
+  );
+};
+
 jiraInfo
   .getToDos()
   .then((tickets = []) => {
@@ -31,12 +40,12 @@ jiraInfo
         ...accum,
         {
           text: statusCategories[statusId].name,
-          color: statusCategories[statusId].colorName
+          color: getColor(statusId)
         },
         ...newFormatted[statusId].map(({ text, href, statusId }) => ({
           text,
           href,
-          color: statusCategories[statusId].colorName
+          color: getColor(statusId)
         }))
       ],
       []
