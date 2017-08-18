@@ -20,7 +20,6 @@ jiraInfo
       };
     });
     const newFormatted = _.groupBy(formattedTickets, 'statusId');
-    console.log(newFormatted);
     const bestFormat = Object.keys(newFormatted).reduce(
       (accum, statusId) => [
         ...accum,
