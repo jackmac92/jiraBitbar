@@ -5,7 +5,9 @@
   "author": "Jack McCown <jmccown@cbinsights.com>",
   "license": "MIT",
   "scripts": {
-    "build": "node_modules/.bin/pkg index.js --target macos"
+    "prebuild": "./build_setup.sh",
+    "build":
+      "JIRA_USERNAME=\"$JIRA_USERNAME\" && JIRA_PASSWORD=\"$JIRA_PASSWORD\" && node_modules/.bin/pkg index.js --target macos --output bundle.js"
   },
   "dependencies": {
     "bitbar": "^0.3.0",
