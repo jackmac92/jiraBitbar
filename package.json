@@ -1,21 +1,23 @@
 {
   "name": "jiraInfo",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "bundle.js",
   "author": "Jack McCown <jmccown@cbinsights.com>",
   "license": "MIT",
   "scripts": {
-    "prebuild": "./build_setup.sh",
-    "build":
-      "JIRA_USERNAME=\"$JIRA_USERNAME\" && JIRA_PASSWORD=\"$JIRA_PASSWORD\" && node_modules/.bin/pkg index.js --target macos --output bundle.js"
+    "prebuild": "yarn install",
+    "build": "webpack",
+    "bitBuild:bang": "echo \"#! /usr/bin/env $(which node)\" | cat - bundle.js > temp && mv -f temp bundle.js",
+    "bitBuild:execute": "sudo chmod +x bundle.js",
+    "bitBuild:move": "[[ -z $BITBAR_PLUGIN_DIR ]]; mv bundle.js $BITBAR_PLUGIN_DIR",
+    "bitBuild": "yarn run build && yarn run bitBuild:bang && yarn run bitBuild:execute && yarn run bitBuild:move",
+    "prestart": "yarn run build",
+    "start": "node ."
   },
   "dependencies": {
     "bitbar": "^0.3.0",
-    "cbiJira": "^2.0.1",
-    "localApi": "^2.3.0",
-    "lodash": "^4.17.4"
-  },
-  "devDependencies": {
-    "pkg": "^4.2.3"
+    "cbiJira": "^3.0.0",
+    "lodash": "^4.17.4",
+    "webpack": "^3.6.0"
   }
 }

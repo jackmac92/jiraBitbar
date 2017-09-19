@@ -1,14 +1,13 @@
-const fs = require('fs');
 const bitbar = require('bitbar');
 const JiraFetcher = require('cbiJira');
 const path = require('path');
 const _ = require('lodash');
 
-const envVars = fs.readFileSync(path.join(__dirname, 'env.txt'), 'utf-8');
-const [buildUsername, buildPassword] = envVars.split('\n');
+// const envVars = fs.readFileSync(path.join(__dirname, 'env.txt'), 'utf-8');
+// const [buildUsername, buildPassword] = envVars.split('\n');
 
-const username = process.env.JIRA_USERNAME || buildUsername;
-const password = process.env.JIRA_PASSWORD || buildPassword;
+const username = process.env.JIRA_USERNAME;
+const password = process.env.JIRA_PASSWORD;
 const { sep: Separator } = bitbar;
 const statusCategories = {};
 const jiraInfo = new JiraFetcher({
@@ -39,8 +38,7 @@ jiraInfo
     const formattedTickets = tickets.map((ticket = {}) => {
       const { key, summary, status = {} } = ticket;
       const { name: statusName, statusCategory = {} } = status;
-      statusCategories[statusCategory.id] =
-        statusCategories[statusCategory.id] || statusCategory;
+      statusCategories[statusCategory.id] = statusCategories[statusCategory.id] || statusCategory;
       return {
         text: `${key}: ${summary}`,
         href: `${jiraUrl}/browse/${key}`,
@@ -67,11 +65,6 @@ jiraInfo
       text: 'Jira',
       dropdown: false,
     };
-    return bitbar([
-      aboveTheFold,
-      Separator,
-      { text: 'Tickets', size: '25' },
-      ...bestFormat,
-    ]);
+    return bitbar([aboveTheFold, Separator, { text: 'Tickets', size: '25' }, ...bestFormat]);
   })
   .catch(console.log);
