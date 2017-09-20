@@ -427,6 +427,13 @@ cross-spawn@^5.0.1:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
+crucible@^1.0.0:
+  version "1.1.0"
+  resolved "https://npm.jackmac.party/crucible/-/crucible-1.1.0.tgz#1a3777cd3644c5f4b805ca7b3f02702e1f5296f2"
+  dependencies:
+    axios "^0.16.2"
+    querystring "^0.2.0"
+
 cryptiles@2.x.x:
   version "2.0.5"
   resolved "https://npm.jackmac.party/cryptiles/-/cryptiles-2.0.5.tgz#3bdfecdc608147c1c67202fa291e7dca59eaa3b8"
@@ -1592,7 +1599,7 @@ querystring-es3@^0.2.0:
   version "0.2.1"
   resolved "https://npm.jackmac.party/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
 
-querystring@0.2.0:
+querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://npm.jackmac.party/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
 

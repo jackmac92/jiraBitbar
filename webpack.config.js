@@ -16,6 +16,8 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
   },
-  plugins: [new webpack.EnvironmentPlugin(['HOME', 'JIRA_USERNAME', 'JIRA_PASSWORD'])],
+  plugins: [
+    new webpack.EnvironmentPlugin(['HOME', 'JIRA_USERNAME', 'JIRA_PASSWORD', 'CRUCIBLE_USERNAME', 'CRUCIBLE_PASSWORD']),
+  ],
   target: 'node',
 };
