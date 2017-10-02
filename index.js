@@ -47,6 +47,8 @@ const getJiraInfo = () =>
     .getToDos()
     .catch(err => {
       console.log('ERRROR');
+      console.log(process.env.JIRA_USERNAME)
+      console.log(process.env.JIRA_PASSWORD)
       console.log(err);
       process.exit(1);
     })
