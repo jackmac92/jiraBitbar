@@ -4,14 +4,13 @@ const CrucibleFetcher = require('crucible');
 const path = require('path');
 const _ = require('lodash');
 
-const { JIRA_USERNAME, JIRA_PASSWORD, CRUCIBLE_USERNAME, CRUCIBLE_PASSWORD } = process.env;
 const jiraUrl = 'https://cbinsights.atlassian.net';
 const { sep: Separator } = bitbar;
 const statusCategories = {};
 const jiraInfo = new JiraFetcher({
   dir: path.resolve(process.env.HOME, './jiraCache'),
-  username: JIRA_USERNAME,
-  password: JIRA_PASSWORD,
+  username: process.env.JIRA_USERNAME,
+  password: process.env.JIRA_PASSWORD,
 });
 
 const parseReviewInfo = review => ({
@@ -47,10 +46,6 @@ const getJiraInfo = () =>
     .getToDos()
     .catch(err => {
       console.log('ERRROR');
-      console.log(process.env.JIRA_USERNAME);
-      console.log(JIRA_USERNAME);
-      console.log(process.env.JIRA_PASSWORD);
-      console.log(JIRA_PASSWORD);
       console.log(err);
       process.exit(1);
     })
@@ -90,7 +85,7 @@ const getJiraInfo = () =>
     });
 
 const getReviewInfo = async () => {
-  const crucibleInfo = new CrucibleFetcher(CRUCIBLE_USERNAME, CRUCIBLE_PASSWORD);
+  const crucibleInfo = new CrucibleFetcher(process.env.CRUCIBLE_USERNAME, process.env.CRUCIBLE_PASSWORD);
   await crucibleInfo.setup();
   const reviews = await crucibleInfo.getReviews();
   return reviews.map(parseReviewInfo).map(r => {
