@@ -47,6 +47,7 @@ const getJiraInfo = () =>
     .getToDos()
     .catch(err => {
       console.log('ERRROR');
+      console.log(err);
       process.exit(1);
     })
     .then((tickets = []) => {
