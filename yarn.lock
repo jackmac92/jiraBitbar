@@ -443,9 +443,9 @@ cross-spawn@^5.0.1:
     shebang-command "^1.2.0"
     which "^1.2.9"
 
-crucible@^1.0.0:
-  version "1.1.0"
-  resolved "https://npm.jackmac.party/crucible/-/crucible-1.1.0.tgz#a590de2abb1eafa2656fb9e515ab1503537855cb"
+crucible@^1.2.0:
+  version "1.2.0"
+  resolved "https://npm.jackmac.party/crucible/-/crucible-1.2.0.tgz#9503039bc08ea9973ff88d6d047c9feedd384d9d"
   dependencies:
     axios "^0.16.2"
     querystring "^0.2.0"
