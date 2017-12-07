@@ -8,7 +8,7 @@ const jiraUrl = 'https://cbinsights.atlassian.net';
 const { sep: Separator } = bitbar;
 const statusCategories = {};
 const jiraInfo = new JiraFetcher({
-  dir: path.resolve(process.env.HOME, './jiraCache'),
+  dir: path.resolve(process.env.HOME, '$HOME/.cbiCache/jiraCache'),
   username: process.env.JIRA_USERNAME,
   password: process.env.JIRA_PASSWORD,
 });
@@ -46,7 +46,8 @@ const getJiraInfo = () =>
     .getToDos()
     .catch(err => {
       console.log('ERRROR');
-      console.log(err);
+      console.log(`username is ${process.env.JIRA_PASSWORD.slice(0, 5)}`);
+      console.log(`password startswith ${process.env.JIRA_PASSWORD.slice(0, 5)}`);
       process.exit(1);
     })
     .then((tickets = []) => {
@@ -61,7 +62,7 @@ const getJiraInfo = () =>
         };
       });
       const newFormatted = _.groupBy(formattedTickets, 'statusId');
-      const bestFormat = Object.keys(newFormatted).reduce(
+      return Object.keys(newFormatted).reduce(
         (accum, statusId) => [
           ...accum,
           {
@@ -76,12 +77,6 @@ const getJiraInfo = () =>
         ],
         []
       );
-      const aboveTheFold = {
-        text: 'Tickets',
-        dropdown: false,
-      };
-      return bestFormat;
-      // return bitbar([aboveTheFold, Separator, { text: 'Tickets', size: '25' }, ...bestFormat]);
     });
 
 const getReviewInfo = async () => {
