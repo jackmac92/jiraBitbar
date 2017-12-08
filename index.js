@@ -7,11 +7,6 @@ const _ = require('lodash');
 const jiraUrl = 'https://cbinsights.atlassian.net';
 const { sep: Separator } = bitbar;
 const statusCategories = {};
-const jiraInfo = new JiraFetcher({
-  dir: path.resolve(process.env.HOME, '$HOME/.cbiCache/jiraCache'),
-  username: process.env.JIRA_USERNAME,
-  password: process.env.JIRA_PASSWORD,
-});
 
 const parseReviewInfo = review => ({
   href: `http://crucible.cbinsights.com/cru/${review.permaId.id}`,
@@ -41,15 +36,16 @@ const getColor = statusId => {
   );
 };
 
+const getJiraClient = () => new JiraFetcher({
+  dir: path.resolve(process.env.HOME, '$HOME/.cbiCache/jiraCache'),
+  username: process.env.JIRA_USERNAME,
+  password: process.env.JIRA_PASSWORD,
+});
+
+
 const getJiraInfo = () =>
-  jiraInfo
+  getJiraClient()
     .getToDos()
-    .catch(err => {
-      console.log('ERRROR');
-      console.log(`username is ${process.env.JIRA_PASSWORD.slice(0, 5)}`);
-      console.log(`password startswith ${process.env.JIRA_PASSWORD.slice(0, 5)}`);
-      process.exit(1);
-    })
     .then((tickets = []) => {
       const formattedTickets = tickets.map((ticket = {}) => {
         const { key, summary, status = {} } = ticket;
@@ -77,7 +73,7 @@ const getJiraInfo = () =>
         ],
         []
       );
-    });
+    }, err => [{ text: 'Failed to load Jira info', submenu: { text: `${err}` } }]);
 
 const getReviewInfo = async () => {
   const crucibleInfo = new CrucibleFetcher(process.env.CRUCIBLE_USERNAME, process.env.CRUCIBLE_PASSWORD);
@@ -87,15 +83,14 @@ const getReviewInfo = async () => {
     try {
       return formatCrucible(r);
     } catch (e) {
-      console.error(e);
-      return {};
+      return [{ text: 'Failed to load Crucible info', submenu: { text: `${e}` } }];
     }
   });
 };
 
 const main = async () => {
   try {
-    const [jra, cru] = await Promise.all([getJiraInfo(), getReviewInfo()]);
+    const [jra = [], cru = []] = await Promise.all([getJiraInfo(), getReviewInfo()]);
     return bitbar([
       {
         text: 'Tickets',
